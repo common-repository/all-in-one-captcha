@@ -1,0 +1,45 @@
+{
+	"name": "all-in-one-captcha/all-in-one-captcha",
+	"description": "All In One Captcha",
+	"license": "GPL-2.0-or-later",
+	"require": {
+		"php": ">=7.2.24",
+		"google/recaptcha": "1.2.4"
+	},
+	"minimum-stability": "dev",
+	"prefer-stable": true,
+	"config": {
+		"allow-plugins": {
+			"dealerdirect/phpcodesniffer-composer-installer": true,
+			"ergebnis/composer-normalize": true
+		},
+		"optimize-autoloader": true,
+		"platform": {
+			"php": "7.2.24"
+		},
+		"process-timeout": 7200,
+		"sort-packages": true
+	},
+	"scripts": {
+		"lint": [
+			"@lint:php",
+			"@lint:cs"
+		],
+		"lint:cs": [
+			"composer --working-dir=devtools update --no-interaction",
+			"devtools/vendor/bin/phpcs --standard=.phpcs.xml.dist"
+		],
+		"lint:fix": [
+			"composer --working-dir=devtools update --no-interaction",
+			"devtools/vendor/bin/phpcbf --standard=.phpcs.xml.dist"
+		],
+		"lint:php": [
+			"composer --working-dir=devtools update --no-interaction",
+			"devtools/vendor/bin/parallel-lint --colors --exclude .git --exclude vendor --exclude node_modules --exclude devtools --exclude deploy ."
+		],
+		"pot": [
+			"composer --working-dir=devtools update --no-interaction",
+			"devtools/vendor/bin/wp i18n make-pot . --exclude=build,deploy,node_modules,vendor --headers='{\"POT-Creation-Date\":\"\"}'"
+		]
+	}
+}
